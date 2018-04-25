@@ -51,7 +51,7 @@ class Collab_Filtering(object):
                 business = self.dict_business_lookup(business_id)
                 input.append([user,business,rating])
         input = np.array(input)
-        #np.save(filename+'.npy',input)
+        np.save(filename+'.npy',input)
         return input
 
     def load_dataset_npy(self, filename):
@@ -90,6 +90,9 @@ class Collab_Filtering(object):
             if not business in self._BURR.keys():
                 self._BURR[business] = {}
             self._BURR[business][user] = rating
+        print('users',len(self._dict_user_avg.keys()))
+        print('business',len(self._dict_business_avg.keys()))
+        print('reviews',input.shape[0])
         s = 0
         co=0
         for business in self._dict_business_avg.keys():
@@ -138,7 +141,6 @@ class Collab_Filtering(object):
         rating = np.zeros(n_tests)
         rating_with_gb = np.zeros(n_tests)
         actual_rating = np.zeros(n_tests)
-        tmp = np.zeros(n_tests)
         dist = 0
         for i in range(n_tests):
             user = int(test_set[i][0])
@@ -178,7 +180,6 @@ class Collab_Filtering(object):
                         sum_s += val[j, 1]
                         if co == k:
                             break
-                tmp[i]=co
                 if sum_s == 0:
                     rating[i] = self.get_avg_rating(self._dict_business_avg, business)
                     rating_with_gb[i] = self.get_baseline_estimate(user,business)
@@ -188,7 +189,7 @@ class Collab_Filtering(object):
             dist += (actual_rating[i] - rating[i]) ** 2
         # np.save('rating', rating)
         # np.save('actual_rating', actual_rating)
-        return rating, rating_with_gb, tmp
+        return rating, rating_with_gb
 
     def get_mu(self):
         return self._mu
@@ -213,6 +214,7 @@ class Collab_Filtering(object):
         predicted[(predicted >= 3.5) & (predicted < 4.5)] = 4
         predicted[(predicted >= 4.5)] = 5
         confusion = confusion_matrix(actual, predicted)
+        accuracy = sum([confusion[i, i] for i in range(5)])/np.sum(confusion)
         precision = 0
         co=0
         for i in range(5):
@@ -221,14 +223,15 @@ class Collab_Filtering(object):
                 co+=1
         precision/=co
         recall = sum([confusion[i, i] / sum(confusion[i, :]) for i in range(5)]) / 5
-        return precision, recall
+        return accuracy,precision, recall
 
 def main(args):
     cf = Collab_Filtering()
     training_set = cf.load_dataset_csv('train')
-    cf.train(training_set)
     test_set = cf.load_dataset_csv('validate')
-    rating, rating_with_gb,tmp = cf.predict(test_set)
+    #training_set = np.concatenate((training_set,test_set))
+    cf.train(training_set)
+    rating, rating_with_gb = cf.predict(test_set)
     actual_rating = test_set[:,2]
     methods = {"cf": rating,
                "cf global": rating_with_gb,
@@ -241,8 +244,10 @@ def main(args):
         print(name, ":")
         print("   RMSE =", np.sqrt(sum((data - actual_rating) ** 2) / actual_rating.shape[0]))
         evals = cf.get_eval_metrics(data, actual_rating)
-        print("   precision =", evals[0])
-        print("   recall =", evals[1])
+        print("   accuracy =", evals[0])
+        print("   precision =", evals[1])
+        print("   recall =", evals[2])
+        #print(np.sqrt(sum((data - actual_rating) ** 2) / actual_rating.shape[0]),"\t",evals[0],"\t",evals[1],"\t",evals[2])
 
 if __name__ == "__main__":
     import sys
