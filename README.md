@@ -14,19 +14,19 @@ Our project is divided into four parts:
 
 
 
-1. Applying K-mean Clustering Algorithm
+Part 1: Applying K-mean Clustering Algorithm
 
 
 
 
-2. Applying Collaborative Filtering Algorithm
+Part 2: Applying Collaborative Filtering Algorithm
 
 
 
 
-3. Applying Restricted Boltzmann Machine (RBM) Algorithm
+Part 3: Applying Restricted Boltzmann Machine (RBM) Algorithm
 
 
 
 
-4. Using other available attributes to make a prediction
+Part 4: Using other available attributes to make a prediction
