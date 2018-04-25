@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CS 525 Final Project</title>
+</head>
+<body>
+
+	<center>
+		<h1>Intelligent Yelp Recommendation System</h1>
+		<h2>CS 525 Final Project</h2>
+		<h3>
+			Sarun Paisarnsrisomsuk<br>
+			Tesia Shizume<br>
+			Anthony Topper<br>
+			Fangling Zhang<br>
+		</h3>
+
+	</center>
+
+	<h2>Overview</h2>
+	<p>
+		We created a series of tools to help recommend restaurants to a user, based on data we pulled from <a href="https://www.yelp.com/">Yelp</a>. We applied various tools, including:
+	</p>
+		<ul>
+			<li>K-means clustering</li>
+			<li>Collaborative Filtering</li>
+			<li>Restricted Boltzmann Machine</li>
+			<li>Support Vector Machine</li>
+		</ul>
+	<p>We started by filtering out entires that were no use to us. First, we only want businesses that are restaurants. We also don't want any insignificant data points, so we filtered out all businesses with less than XXX reviews. We ended up with a dataset of 17,153 users and 4,733 business. We then split the dataset, some of it for training and some of it for testing.</p>
+	<p>The raw data we pulled from Yelp can be seen here: <br><a href="train.csv">train.csv</a><br><a href="validate.csv">validate.csv</a></p>
+
+	<p>We then built a relational schema to deal with the various attributes we get from the Yelp API:</p>
+	<img src="Schema.png" style="width: 50%">
+
+	
+
+</body>
+</html>
