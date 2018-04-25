@@ -26,7 +26,7 @@ Part 2: Applying Collaborative Filtering Algorithm
 
 Part 3: Applying AutoEncoder, Restricted Boltzmann Machine (RBM), Latent Factor Model
 
-code 'ae.py', 'rbm.py' and 'lfm-tf.py'. 
+code 'AE_final.py', 'RBM_final.py' and 'lfm-tf.py'. 
 
 
 
