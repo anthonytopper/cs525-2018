@@ -26,8 +26,8 @@ Part 2: Applying Collaborative Filtering Algorithm
 
 Part 3: Applying AutoEncoder, Restricted Boltzmann Machine (RBM), Latent Factor Model
 
-run code 'ae.py', 'rbm.py' and 'lfm-tf.py'. 
-This part needs you to install pytorch and tensorflow firstly.
+code 'ae.py', 'rbm.py' and 'lfm-tf.py'. 
+
 
 
 
