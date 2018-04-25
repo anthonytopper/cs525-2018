@@ -6,7 +6,7 @@
 -Overview of k-means section:
 
 The kmeans portion of this project was meant to be used as preprocessing for the later stages of the
-project.
+project and was developed using python 3.6.3.
 
 The working code of this portion of the project can be found in two files:
 make_business_list.py
