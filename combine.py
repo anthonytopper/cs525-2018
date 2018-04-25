@@ -39,9 +39,30 @@ acc_lfm=acc(lfm)
 
 combine=acc_rbm*rbm+acc*acc_ae+acc_lfm*lfm
 #get the m maximum restaurant for each customer
+
+business_names=pd.read_csv('yelp_business.csv',index_col=0)
+business_names=business_names.iloc[:,:1]
+train=pd.read_csv('train.csv')
+validate=pd.read_csv('validate.csv')
+
+business=sorted(list(set(train['business_id']).union(set(validate['business_id']))))
+def present(business,business_names):
+    d={}
+    for i,idn in enumerate(business):
+        d[i]=list(business_names.iloc[business_names.index==idn,0])[0]
+    return d
+dic=present(business,business_names)
+
+res=[]
+for busi in combine:
+    l=busi.argsort()[-5:]
+    rest=list(map(lambda x:dic[x],l ))
+    res.append(rest)
     
-recomend=
-                
+pd.DataFrame(res).to_csv('recommate_rest.csv')
+    
+    
+    
 
 
     
